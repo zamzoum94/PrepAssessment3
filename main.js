@@ -11,77 +11,49 @@
 //==============================================================================
 //lets make an employee profile using closures
 
-  function employee (name,salary){
-    return {
-      name: name,
-      salary: salary,
-      sayMyName : sayMyName,
-      sayHello : sayHello,
-      increaseSalary : increaseSalary,
-      addFriend : addFriend,
-      listFriends : listFriends
-    }   
-  }
+        function employee (name,salary){
+            var name = name;
+            var salary = salary;
+            var friends = [];
+          return {
+            sayMyName : function(){
+              return name;
+            },
+            sayHello : function(){
+              return "Hello "+name;
+            },
+            increaseSalary : function increaseSalary(amount){
+              return salary = salary + amount;
+            },
+            addFriend : function(newFriend){
+              if(!friends.includes(newFriend.sayMyName())){
+                friends.push(newFriend.sayMyName());
+              }
+              if(friends.length === 1){
+                return "You just became friends with " + friends[0];
+              }
+              var str = friends.join(", ");
+              var index = str.lastIndexOf(",");
+              str = str.substr(0, index);
+              str = "You just became friends with "+ str + " and " + friends[friends.length - 1];
+              return str;
+            },
+            listFriends : function(){
+              if(friends.length === 1){
+                return "You have " + friends.length + " friend";
+              }
+              return "You have " + friends.length + " friends";
+            }
+          }   
+        }
 
-  var employeeA = employee("jack", 100);
-  var employeeB = employee("Mark", 200);
-  var employeeC = employee("Sara", 150);
+      var employeeA = employee("jack", 100);
+      var employeeB = employee("Mark", 200);
+      var employeeC = employee("Sara", 150);
+      
 
 
-  //create a function when invoked returns the name of that employee.
-
-  function sayMyName(){
-    return this.name;
-  }
-
-  // employeeA.sayMyName(); // "jack"
-  // employeeB.sayMyName(); // "Mark"
-
-
-  //now modify that closure and add a function that says hello to the employee name;
-
-function sayHello(){
-  return "Hello " + this.name;
-}
-
-  // employeeA.sayHello(); // hello jack
-  // employeeB.sayHello(); // hello Mark
-
-  //modify your closure and add function increaseSalary that increases the salary for the employee by n value and return it.
-  //employeeA.increaseSalary(50); // "your salary is 150$"
-
-  function increaseSalary(amount){
-    this.salary = this.salary + amount;
-    return "Your salary is " + this.salary + "$";
-  }
-
-  //how about we let jack and mark meet togther!
-  //modify your closure and add function addFriend that accepts an object as a parameter, and let jack meets his friends.
-  function addFriend(newFriend){
-    if(this.numberOfFriend === undefined){
-      this.numberOfFriend = 1;
-    } else {
-      this.numberOfFriend++;
-    }
-    return "You just became friend with " + newFriend.name;
-  }
-
-  // employeeA.addFriend(employeeB); // "you just became friend with Mark"
-  // employeeA.addFriend(employeeC); // "you just became friend with Mark and Sara"
-
-  //modify your closure to tell mark how many friends does he have.
-
-  function listFriends(){
-    if(this.numberOfFriend === undefined){
-      return "You have 0 friends";
-    } else if(this.numberOfFriend === 1){
-      return "You have " + this.numberOfFriend + " friend";
-    }
-    return "You have " + this.numberOfFriend + " friends";
-  }
-
-  // employeeA.listFriends(); // "you have 2 friends"
-
+  
 
 //=============================================================================
 /*                                  Q2                                       */
@@ -95,7 +67,8 @@ function sayHello(){
       addInfo : addInfo,
       increaseAge : increaseAge,
       check : check,
-      changeState : changeState
+      changeState : changeState,
+      availability : false
     }
   }
 
@@ -119,26 +92,21 @@ function sayHello(){
     return this.age;
   }
 
-  // d - create a variable called availability with the default state as false, then create another function to check the pet state, 
+  // d - create a variable called availability with the default state as false, 
+  // then create another function to check the pet state, 
   //returns true if the pet is available and false if it's not
 
   function check(){
     return this.availability;
   }
 
-  // f- in order to change the state of the pet, create a function called changeState, when called it will make the pet avaliablity true,
+  // f- in order to change the state of the pet, create a function called changeState, 
+  // when called it will make the pet avaliablity true,
   //    and when called again it will make it false.
 
 
   function changeState(){
-    if(this.availability === undefined){
-      return this.availability = true;
-    }
-    if(this.availability === true){
-      return this.availability = false;
-    } else{
-      return this.availability = true;
-    }
+    return this.availability = !this.availability;
   }
 
   // Write your code here .....
